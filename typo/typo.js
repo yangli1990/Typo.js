@@ -1,4 +1,4 @@
-'use strict';
+var fs = require('fs');
 
 /**
  * Typo is a JavaScript implementation of a spellchecker using hunspell-style 
@@ -54,15 +54,9 @@ var Typo = function (dictionary, affData, wordsData, settings) {
 	if (dictionary) {
 		this.dictionary = dictionary;
 		
-		if (this.platform == "chrome") {
-			if (!affData) affData = this._readFile(chrome.extension.getURL("lib/typo/dictionaries/" + dictionary + "/" + dictionary + ".aff"));
-			if (!wordsData) wordsData = this._readFile(chrome.extension.getURL("lib/typo/dictionaries/" + dictionary + "/" + dictionary + ".dic"));
-		} else {
-			var path = settings.dictionaryPath || '';
-			
-			if (!affData) affData = this._readFile(path + "/" + dictionary + "/" + dictionary + ".aff");
-			if (!wordsData) wordsData = this._readFile(path + "/" + dictionary + "/" + dictionary + ".dic");
-		}
+		if (!affData) affData = fs.readFileSync(__dirname + "/dictionaries/" + dictionary + "/" + dictionary + ".aff").toString();
+		if (!wordsData) wordsData = fs.readFileSync(__dirname + "/dictionaries/" + dictionary + "/" + dictionary + ".dic").toString();
+		
 		
 		this.rules = this._parseAFF(affData);
 		
@@ -132,28 +126,6 @@ Typo.prototype = {
 		}
 		
 		return this;
-	},
-	
-	/**
-	 * Read the contents of a file.
-	 * 
-	 * @param {String} path The path (relative) to the file.
-	 * @param {String} [charset="ISO8859-1"] The expected charset of the file
-	 * @returns string The file data.
-	 */
-	
-	_readFile : function (path, charset) {
-		if (!charset) charset = "ISO8859-1";
-		
-		var req = new XMLHttpRequest();
-		req.open("GET", path, false);
-		
-		if (req.overrideMimeType)
-			req.overrideMimeType("text/plain; charset=" + charset);
-		
-		req.send(null);
-		
-		return req.responseText;
 	},
 	
 	/**
@@ -764,3 +736,5 @@ Typo.prototype = {
 		return correct(word);
 	}
 };
+
+module.exports = Typo;

@@ -1,0 +1,27 @@
+{
+  "name": "spellcorrect",
+  "version": "1.0.0",
+  "description": "A node library to check your spelling",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yangli1990/Typo.js.git"
+  },
+  "keywords": [
+    "typo",
+    "spellcheck",
+    "spellcorrect"
+  ],
+  "author": "Yang Li/cfinke",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/yangli1990/Typo.js/issues"
+  },
+  "homepage": "https://github.com/yangli1990/Typo.js"
+}
